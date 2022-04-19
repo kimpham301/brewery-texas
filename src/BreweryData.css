@@ -24,3 +24,18 @@
     font-size: 1.8vmin;
     list-style-type:none;
 }
+.toggle{
+    color:gray;
+    font-size:4vw;
+    cursor:pointer
+}
+.contact-info{
+    margin-left:0.5vw;
+    font-size:1vw;
+}
+@media only screen and (max-width:700px) {
+
+    .info ul{
+        transform: translate(-8vw,-20%);
+    }
+}
