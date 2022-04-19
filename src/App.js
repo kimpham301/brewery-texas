@@ -5,6 +5,7 @@ import BreweryData from "./BreweryData";
 export default function App() {
   const [data, setData] = useState([]);
   const [searchInput, setSearchInput] = useState('')
+  const [cityFilter, setCityFilter] = useState('')
   const state = "texas";
   async function fetchData(){
     let response =  await fetch(`https://api.openbrewerydb.org/breweries?by_state=${state}`)
@@ -18,7 +19,7 @@ export default function App() {
     )
     .catch(err=>console.log("Error: ",err))
   }, []);
-
+  const uniqueValue= new Set(data.map(v=>v.city))
   return (
     <div className="page">
       <input
@@ -27,7 +28,20 @@ export default function App() {
       onChange={(e)=>setSearchInput(e.target.value)}
       />
      <div className="brewery-page">
-       {data.filter((name)=>{
+       <select onChange={(f)=>setCityFilter(f.target.value)}>
+        <option value="">All cities</option>
+        {Array(...uniqueValue).map(value1=>
+        <option key={value1} value= {value1}>{value1}</option>
+          )}
+          </select>
+       {data.filter((city)=>{
+        if(cityFilter===""){
+          return city
+        } else if (city.city === cityFilter){
+          return city
+        }
+      })
+       .filter((name)=>{
         if(searchInput===""){
           return name
         } else if (name.name.toLowerCase().includes(searchInput.toLowerCase())){
