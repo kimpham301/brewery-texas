@@ -38,4 +38,10 @@
     .info ul{
         transform: translate(-8vw,-20%);
     }
+    .info i{
+        font-size: xx-small;
+    }
+    .contact-info{
+        font-size: 1.5vw;
+    }
 }
