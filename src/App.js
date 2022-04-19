@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import './App.css';
+import BreweryData from "./BreweryData";
 
 export default function App() {
   const [data, setData] = useState([]);
@@ -22,7 +23,7 @@ export default function App() {
      <div className="brewery-page">
        {data.map((brewery)=>{
          return(
-           <div key={brewery.id}>{brewery.name}</div>)
+           <BreweryData key={brewery.id} {...brewery} />)
        })}
      </div>
     </div>
