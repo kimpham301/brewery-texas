@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import {useState, useEffect} from "react";
 import './App.css';
 
-function App() {
+export default function App() {
+  const [data, setData] = useState([]);
+  const state = "texas";
+  async function fetchData(){
+    let response =  await fetch(`https://api.openbrewerydb.org/breweries?by_state=${state}`)
+    let data = await response.json();
+    return data;
+  }
+  useEffect(()=>{
+    fetchData()
+    .then(data =>{
+      setData(data)}
+    )
+    .catch(err=>console.log("Error: ",err))
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="page">
+     <div className="brewery-page">
+       {data.map((brewery)=>{
+         return(
+           <div key={brewery.id}>{brewery.name}</div>)
+       })}
+     </div>
     </div>
   );
 }
 
-export default App;
+
