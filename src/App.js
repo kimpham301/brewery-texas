@@ -37,7 +37,7 @@ useEffect(()=>{
 }, []);
 /*Create a set of cities */
 const uniqueValue= new Set(data.map(v=>v.city))
-const uniqueTypes = new Set(data.map(t=> t.brewery_type))
+const uniqueTypes = new Set(data.map(t=> t.brewery_type.toCapi))
 console.log(uniqueTypes)
   return (
     <div className="page">
@@ -100,6 +100,7 @@ console.log(uniqueTypes)
       })
     }
  </div>
+
   </div>
   )
 }
