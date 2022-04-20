@@ -6,6 +6,7 @@ export default function App(){
 const [data, setData] = useState([]);
 const [searchInput, setSearchInput] = useState('')
 const [cityFilter, setCityFilter] = useState('')
+const [typeFilter, setTypeFilter] = useState('')
 const state = `texas`;
 function oneDay(){
   var date = new Date().toLocaleDateString();
@@ -36,6 +37,8 @@ useEffect(()=>{
 }, []);
 /*Create a set of cities */
 const uniqueValue= new Set(data.map(v=>v.city))
+const uniqueTypes = new Set(data.map(t=> t.brewery_type))
+console.log(uniqueTypes)
   return (
     <div className="page">
       <h1 id="title">{state} Brewery Data</h1>
@@ -47,15 +50,31 @@ const uniqueValue= new Set(data.map(v=>v.city))
       
 
     <div className="brewery-page">
-    <select className="city-select" onChange={(f)=>setCityFilter(f.target.value)}>
-        <option value="">All cities</option>
-        {Array(...uniqueValue).sort((a,b)=>{return a>b ? 1 :-1}).map(value1=>
+      <div className="filter">
+    <select className="select" onChange={(t)=>setTypeFilter(t.target.value)}>
+        <option value="">All types</option>
+        {Array(...uniqueTypes).sort((a,b)=>{return a>b ? 1 :-1}).map(value1=>
         <option key={value1} value= {value1}>{value1}</option>
           )}
       
       </select>
+      <select className="select" onChange={(f)=>setCityFilter(f.target.value)}>
+        <option value="">All cities</option>
+        {Array(...uniqueValue).sort((a,b)=>{return a>b ? 1 :-1}).map(value=>
+        <option key={value} value= {value}>{value}</option>
+          )}
+      
+      </select>
+      </div>
       {/*Filter data by city*/
-      data.filter((city)=>{
+      data.filter((type)=>{
+        if(typeFilter===""){
+          return type
+        } else if (type.brewery_type === typeFilter){
+          return type
+        }
+      })
+      .filter((city)=>{
         if(cityFilter===""){
           return city
         } else if (city.city === cityFilter){

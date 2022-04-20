@@ -30,19 +30,20 @@
 }
 .contact-info{
     margin-left:0.5vw;
-    font-size:1vw;
+    font-size:1.8vmin;
 }
 @media only screen and (max-width:700px) {
 
     .info ul{
-        margin-top: 1vw;
-        font-size:2vw;
-        transform: translate(-5vw,-20%);
+        transform: translate(-8vmin,0);
+    }
+    .info li{
+        font-size: 2vw;
     }
     .info i{
         font-size: xx-small;
     }
     .contact-info{
-        font-size: 1.5vw;
+        font-size: 2vmin;
     }
 }
