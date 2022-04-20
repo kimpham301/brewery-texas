@@ -37,7 +37,7 @@ useEffect(()=>{
 }, []);
 /*Create a set of cities */
 const uniqueValue= new Set(data.map(v=>v.city))
-const uniqueTypes = new Set(data.map(t=> t.brewery_type.toCapi))
+const uniqueTypes = new Set(data.map(t=> t.brewery_type))
 console.log(uniqueTypes)
   return (
     <div className="page">
@@ -66,7 +66,7 @@ console.log(uniqueTypes)
       
       </select>
       </div>
-      {/*Filter data by city*/
+      {/*Filter data by type, city*/
       data.filter((type)=>{
         if(typeFilter===""){
           return type
