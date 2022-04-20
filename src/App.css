@@ -5,6 +5,9 @@
   justify-content: center;
   flex-direction: column;
 }
+#title{
+  text-transform:capitalize;
+}
 .brewery-page{
   background: white;
   display: flex;
@@ -58,5 +61,5 @@
   .search-input{
     width:70vw;
   }
-  
+
 }

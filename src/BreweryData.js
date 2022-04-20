@@ -2,7 +2,7 @@ import {useState} from "react"
 import "./BreweryData.css";
 
 export default function BreweryData(props){
-    const {name,street, city, brewery_type, phone, website_url} = props
+    const {name,street, city, postal_code, brewery_type, phone, website_url} = props
     const  [toggle,setToggle] = useState(false)
     function showContacts(){
         setToggle(!toggle)
@@ -11,11 +11,11 @@ return(
     <div className="container">
     <div className="info">
     <span className="info-title">{name} </span> 
-        {website_url && <a href={website_url}><i className="small bi bi-box-arrow-up-right"></i></a>}
+        {website_url && <a href={website_url} target="_blank" rel="noreferrer noopener"><i className="small bi bi-box-arrow-up-right"></i></a>}
         <ul>
         <li>Type: {brewery_type.slice(0,1).toUpperCase() +  brewery_type.slice(1)}</li>
-        <li>Street: {street ? street :"N/A"}</li>
-        <li>City: {city}</li>
+        <li>Location: {street ? street :""}, {city}</li>
+        <li>Zip code: {postal_code}</li>
         </ul>
     {toggle && 
             <div className="contact-info">

@@ -38,7 +38,7 @@ useEffect(()=>{
 const uniqueValue= new Set(data.map(v=>v.city))
   return (
     <div className="page">
-      <h1>Texas Brewery Data</h1>
+      <h1 id="title">{state} Brewery Data</h1>
        <input
       className = "search-input"
       placeholder="Search by Name"
