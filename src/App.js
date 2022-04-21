@@ -8,37 +8,43 @@ const [searchInput, setSearchInput] = useState('')
 const [cityFilter, setCityFilter] = useState('')
 const [typeFilter, setTypeFilter] = useState('')
 const state = `texas`;
-function oneDay(){
+
+function oneDayPassed(){
   var date = new Date().toLocaleDateString();
-  if(localStorage.brewery_date === date)
+  if(localStorage.getItem('date') === date)
   return false;
-  localStorage.brewery_date = date
+  localStorage.setItem('date', date);
   return true;
 }
-async function fetchData(){
-    let response = await fetch(`https://api.openbrewerydb.org/breweries?by_state=${state}`)
-    let data = await response.json();
-    return data
-}
+
+console.log(localStorage.getItem('date'))
+
 useEffect(()=>{
-  fetchData()
-    .then(data=> {
-      setData(data)
-      console.log(data)}
-      )
-    .catch(err=>console.log("Error: ", err))
-    if (oneDay()) {
-      fetchData()
-      .then(data=> {
-        setData(data)
-        console.log(data)}
-        )
-      .catch(err=>console.log("Error: ", err))}
-}, []);
+  async function fetchData(){
+    try{ 
+      const response = await fetch(`https://api.openbrewerydb.org/breweries?by_state=${state}`)
+      let breweryData = await response.json()
+      localStorage.setItem("data", JSON.stringify(breweryData))
+      setData(JSON.parse(localStorage.getItem("data")))
+      console.log("data updated")
+      localStorage.setItem("state", state)
+    }
+    catch(err){console.log("Error: ", err)}
+  }
+  if (oneDayPassed() || state !== localStorage.getItem("state")) fetchData()
+  else if (!oneDayPassed()) {
+    setData(JSON.parse(localStorage.getItem("data")))
+    console.log("not updated")}
+
+  setInterval(() => {
+    fetchData();
+  }, 1000 * 60 * 60 * 24) /* every 24 hours, we'll fetch the data, assuming browser still on.*/
+ 
+}, [state]);
+
 /*Create a set of cities */
 const uniqueValue= new Set(data.map(v=>v.city))
 const uniqueTypes = new Set(data.map(t=> t.brewery_type))
-console.log(uniqueTypes)
   return (
     <div className="page">
       <h1 id="title">{state} Brewery Data</h1>
@@ -69,25 +75,19 @@ console.log(uniqueTypes)
       {/*Filter data by type, city*/
       data.filter((type)=>{
         if(typeFilter===""){
-          return type
-        } else if (type.brewery_type === typeFilter){
-          return type
-        }
+          return type}
+        else return type.brewery_type=== typeFilter
       })
       .filter((city)=>{
         if(cityFilter===""){
-          return city
-        } else if (city.city === cityFilter){
-          return city
-        }
+          return city}
+        else return (city.city === cityFilter)
       })
       /*Filter data by searchInput*/
       .filter((name)=>{
         if(searchInput===""){
           return name
-        } else if (name.name.toLowerCase().includes(searchInput.toLowerCase())){
-          return name
-        }
+        } else return (name.name.toLowerCase().includes(searchInput.toLowerCase()))
       })
       /*Sort data alphabetically A-Z*/
       .sort((a,b)=>{

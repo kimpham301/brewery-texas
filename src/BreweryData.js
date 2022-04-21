@@ -14,7 +14,7 @@ return(
         {website_url && <a href={website_url} target="_blank" rel="noreferrer noopener"><i className="small bi bi-box-arrow-up-right"></i></a>}
         <ul>
         <li>Type: {brewery_type.slice(0,1).toUpperCase() +  brewery_type.slice(1)}</li>
-        <li>Location: {street ? street :""}, {city}</li>
+        <li>Location: {street ? street + "," :""} {city}</li>
         <li>Zip code: {postal_code}</li>
         </ul>
     {toggle && 
