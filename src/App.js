@@ -23,16 +23,15 @@ function oneDayPassed(){
 useEffect(()=>{
   async function fetchData(){
     try{ 
-      const response = await fetch(`https://api.openbrewerydb.org/breweries?by_state=${state}&per_page=${page}`)
+      const response = await fetch(`http://localhost:5000`)
       let breweryData = await response.json()
       localStorage.setItem("data", JSON.stringify(breweryData))
       setData(JSON.parse(localStorage.getItem("data")))
       console.log("data updated")
-      localStorage.setItem("state", state)
     }
     catch(err){console.log("Error: ", err)}
   }
-  if (oneDayPassed() || state !== localStorage.getItem("state")) fetchData()
+  if (oneDayPassed()) fetchData()
   else if (!oneDayPassed()) {
     setData(JSON.parse(localStorage.getItem("data")))
     console.log("not updated")}
@@ -41,7 +40,7 @@ useEffect(()=>{
     fetchData();
   }, 1000 * 60 * 60 * 24) /* every 24 hours, we'll fetch the data, assuming browser still on.*/
  
-}, [state, page]);
+}, [page]);
 
 /*Create a set of cities */
 const uniqueValue= new Set(data.map(v=>v.city))
