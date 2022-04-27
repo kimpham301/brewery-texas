@@ -8,33 +8,19 @@ const [searchInput, setSearchInput] = useState('')
 const [cityFilter, setCityFilter] = useState('')
 const [typeFilter, setTypeFilter] = useState('')
 const state = `texas`;
-/*Function to check whether one day has passed
-If date in localStorage equals current date then return false
-otherwise return true*/
-function oneDayPassed(){
-  var date = new Date().toLocaleDateString();
-  if(localStorage.getItem('date') === date)
-  return false;
-  localStorage.setItem('date', date);
-  return true;
-}
 
 useEffect(()=>{
   async function fetchData(){
     try{ 
       const response = await fetch(`http://localhost:5000`)
       let breweryData = await response.json()
-      localStorage.setItem("data", JSON.stringify(breweryData))
-      setData(JSON.parse(localStorage.getItem("data")))
+      setData(breweryData)
       console.log("data updated")
     }
     catch(err){console.log("Error: ", err)}
   }
-  if (oneDayPassed()) fetchData()
-  else if (!oneDayPassed()) {
-    setData(JSON.parse(localStorage.getItem("data")))
-    console.log("not updated")}
-    console.log(localStorage.getItem('date'))
+ fetchData()
+  
   setInterval(() => {
     fetchData();
   }, 1000 * 60 * 60 * 24) /* every 24 hours, we'll fetch the data, assuming browser still on.*/
