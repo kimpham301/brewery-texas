@@ -7,8 +7,7 @@ const [data, setData] = useState([]);
 const [searchInput, setSearchInput] = useState('')
 const [cityFilter, setCityFilter] = useState('')
 const [typeFilter, setTypeFilter] = useState('')
-const state = `ohio`;
-const page = `50`;
+const state = `texas`;
 /*Function to check whether one day has passed
 If date in localStorage equals current date then return false
 otherwise return true*/
