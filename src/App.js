@@ -39,7 +39,7 @@ useEffect(()=>{
     fetchData();
   }, 1000 * 60 * 60 * 24) /* every 24 hours, we'll fetch the data, assuming browser still on.*/
  
-}, [page]);
+}, []);
 
 /*Create a set of cities */
 const uniqueValue= new Set(data.map(v=>v.city))
